@@ -1,5 +1,5 @@
 ###
-GET http://localhost:3000/health-check
+GET http://localhost:8080/health-check
 
 > {%
     client.test('should return simple health check message',
@@ -9,7 +9,7 @@ GET http://localhost:3000/health-check
 %}
 
 ###
-POST http://localhost:3000/currency
+POST http://localhost:8080/currency
 Content-Type: application/json
 
 {
@@ -36,7 +36,7 @@ Content-Type: application/json
 %}
 
 ###
-GET http://localhost:3000/currency
+GET http://localhost:8080/currency
 
 > {%
     client.test('should return currency exchange rates',
@@ -59,7 +59,7 @@ GET http://localhost:3000/currency
 %}
 
 ###
-POST http://localhost:3000/currencyExchange
+POST http://localhost:8080/currencyExchange
 Content-Type: application/json
 
 {
@@ -81,7 +81,7 @@ Content-Type: application/json
 %}
 
 ###
-POST http://localhost:3000/currencyExchange
+POST http://localhost:8080/currencyExchange
 Content-Type: application/json
 
 {
@@ -96,14 +96,14 @@ Content-Type: application/json
         () => {
             client.assert(JSON.stringify(response.body) ===  JSON.stringify({
                 "currency": "PLN",
-                "value":  490.85339999999997,
+                "value":  490.8534,
                 "date": "2023-01-01"
             }));
         });
 %}
 
 ###
-POST http://localhost:3000/currency
+POST http://localhost:8080/currency
 Content-Type: application/json
 
 {
@@ -130,7 +130,7 @@ Content-Type: application/json
 %}
 
 ###
-GET http://localhost:3000/currency
+GET http://localhost:8080/currency
 
 > {%
     client.test('should return more currency rates',
