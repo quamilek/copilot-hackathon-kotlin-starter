@@ -1,22 +1,18 @@
 package com.example.currencyexchange
 
-import jakarta.servlet.http.HttpServletResponse
+import com.example.currencyexchange.db.InMemoryStorage
+import com.example.currencyexchange.model.Currencies
+import com.example.currencyexchange.model.CurrencyExchangeResult
+import com.example.currencyexchange.model.Exchange
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.math.BigDecimal
-
-
-class Storage{
-    val currencies = mutableListOf<Currency>()
-}
-
 
 
 @RestController
 class ExampleController {
 
-    val storage = Storage()
+    val storage = InMemoryStorage()
 
     @GetMapping("/health-check")
     fun greeting(): String {
@@ -26,6 +22,7 @@ class ExampleController {
     @PostMapping(value = ["/currency"])
     @ResponseBody
     fun addCurrency(@RequestBody currencies: Currencies): ResponseEntity<Currencies>{
+        // little hack to implement js style sort in array
         currencies.currencies.reversed().forEach { currency ->
             storage.currencies.add(0, currency)
         }
@@ -53,30 +50,6 @@ class ExampleController {
         )
         return ResponseEntity(currencyExchangeResult, HttpStatus.OK);
     }
-
 }
 
-data class CurrencyExchangeResult(
-    val currency:  String,
-    val value: BigDecimal,
-    val date: String,
-)
 
-data class Exchange(
-    val from_currency: String,
-    val to_currency: String,
-    val amount: BigDecimal,
-    val date: String
-)
-
-
-data class Currencies(
-    val currencies: List<Currency>
-)
-
-
-data class Currency(
-    val currency: String,
-    val price_pln: String,
-    val date: String,
-)
